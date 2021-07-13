@@ -5,7 +5,9 @@
 ## Build the frontend
 ```bash
 > cd todo-list-frontend
+> yarn install
 > yarn start
+
 ```
 
 ## Build the backend
