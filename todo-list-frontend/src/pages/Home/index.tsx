@@ -1,6 +1,7 @@
 // @ts-nocheck
 import React, { useEffect, useRef } from 'react';
 import { Card, Col, Row } from 'react-bootstrap';
+import { useHistory } from 'react-router-dom';
 import Header from '../../components/Header';
 import Project from '../../components/Project';
 import { listProjects } from '../../actions';
@@ -13,14 +14,20 @@ const Home: React.FC = () => {
   const [projects, setProjects] = useState([])
   const [newProjectName, setNewProjectName] = useState('')
   const newProjectNameRef = useRef()
+  const history = useHistory()
 
   useEffect(() => {
     loadProjects()
   }, [])
 
   async function loadProjects() {
-    const result = await listProjects()
-    setProjects(result.data)
+    try{
+      const result = await listProjects()
+      setProjects(result.data)
+    } catch(e) {
+      console.log(e)
+      history.push('/login')
+    }
   }
 
   const handleCreateProject = async () => {
