@@ -1,0 +1,36 @@
+version: "3"
+
+services:
+  api-server:
+    container_name: todo-backend
+    restart: always
+    build: .
+    environment: 
+      - MONGO_URL=mongodb://mongodb:27017/todo-list-backend
+    depends_on: 
+      - mongodb
+    ports: 
+      - "3001:3001"
+    networks: 
+      - todo
+
+  mongodb:
+    container_name: mongo-todo
+    image: mongo
+    restart: unless-stopped
+    volumes:
+      - mongo-todo-data:/data/db
+    networks: 
+      - todo
+    ports: 
+      - "27017:27017"
+
+volumes:
+  mongo-todo-data:
+    driver: local
+
+networks:
+  todo:
+    driver: 
+      bridge
+
